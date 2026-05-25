@@ -85,7 +85,10 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 USE_CLOUDINARY = env.bool('USE_CLOUDINARY', default=False)
-if USE_CLOUDINARY or not DEBUG:
+# Only enable Cloudinary storage when explicitly requested via USE_CLOUDINARY.
+# Do not force Cloudinary when DEBUG=False so build steps (collectstatic)
+# don't fail if CLOUDINARY_URL is not yet provided during deploy.
+if USE_CLOUDINARY:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     CLOUDINARY_STORAGE = {'CLOUDINARY_URL': env('CLOUDINARY_URL')}
     CLOUDINARY_URL = env('CLOUDINARY_URL')
