@@ -25,6 +25,3 @@ celerybeat-schedule
 # PyCharm
 *.iml
 
-# Render deployment
-render.yaml
-

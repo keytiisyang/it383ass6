@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: photoalbum
+    env: python
+    plan: free
+    buildCommand: >-
+      pip install -r requirements.txt &&
+      python manage.py collectstatic --noinput &&
+      python manage.py migrate
+    startCommand: gunicorn photoalbum.wsgi
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        scope: build,runtime
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: photoalbum-db
+          property: connectionString
+      - key: CLOUDINARY_URL
+        sync: false
+      - key: USE_CLOUDINARY
+        value: "True"
+
+databases:
+  - name: photoalbum-db
+    databaseName: photoalbum
+    user: photoalbum
+    plan: free
+    postgresMajorVersion: "15"
