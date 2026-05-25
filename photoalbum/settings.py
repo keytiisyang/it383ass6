@@ -20,9 +20,9 @@ def parse_allowed_hosts(value):
 
 env = environ.Env(
     DEBUG=(bool, False),
-    ALLOWED_HOSTS=(str, '127.0.0.1,localhost'),
+    ALLOWED_HOSTS=(str, 'photoalbum-ayuste.onrender.com'),
     DATABASE_URL=(str, ''),
-    CLOUDINARY_URL=(str, ''),
+    CLOUDINARY_URL=(str, 'cloudinary://<your_api_key>:<your_api_secret>@ddagngegy'),
 )
 ENV_PATH = BASE_DIR / '.env'
 if ENV_PATH.exists():
@@ -30,7 +30,7 @@ if ENV_PATH.exists():
 
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY', default='replace-this-in-production')
-ALLOWED_HOSTS = parse_allowed_hosts(env('ALLOWED_HOSTS', default='127.0.0.1,localhost'))
+ALLOWED_HOSTS = parse_allowed_hosts(env('ALLOWED_HOSTS', default='photoalbum-ayuste.onrender.com'))
 
 DATABASE_URL = env('DATABASE_URL', default=f'sqlite:///{BASE_DIR / "db.sqlite3"}')
 DATABASES = {'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)}
