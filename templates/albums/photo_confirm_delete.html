@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Delete Photo{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h1>Delete Photo</h1>
+        <p>Are you sure you want to remove the photo "{{ object.title }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Delete</button>
+            <a class="btn btn-outline-secondary" href="{% url 'album-detail' object.album.pk %}">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+__pycache__/
+*.py[cod]
+*.log
+*.pot
+*.py[co]
+*.sqlite3
+env/
+venv/
+*.env
+*.local
+/media/
+/staticfiles/
+.DS_Store
+node_modules/
+celerybeat-schedule
+*.pid
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Python virtual env
+.Python
+
+# PyCharm
+*.iml
+
+# Render deployment
+render.yaml
+

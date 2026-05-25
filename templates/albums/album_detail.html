@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}{{ album.title }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-start mb-3">
+    <div>
+        <h1>{{ album.title }}</h1>
+        <p class="text-muted">Created by {{ album.owner.username }} on {{ album.created_at|date:'F j, Y' }}</p>
+    </div>
+    {% if can_edit %}
+        <div class="btn-group">
+            <a class="btn btn-outline-secondary" href="{% url 'album-edit' album.pk %}">Edit</a>
+            <a class="btn btn-outline-danger" href="{% url 'album-delete' album.pk %}">Delete</a>
+        </div>
+    {% endif %}
+</div>
+<p>{{ album.description }}</p>
+<div class="mb-4">
+    {% if user.is_authenticated and can_edit %}
+        <a class="btn btn-primary" href="{% url 'photo-add' album.pk %}">Add Photo</a>
+    {% endif %}
+</div>
+<div class="row g-4">
+    {% for photo in photos %}
+        <div class="col-md-4">
+            <div class="card h-100">
+                <img src="{{ photo.image.url }}" class="card-img-top" alt="{{ photo.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ photo.title }}</h5>
+                    <p class="card-text">{{ photo.caption|truncatechars:120 }}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <small class="text-muted">{{ photo.created_at|date:'M j, Y' }}</small>
+                    {% if photo.can_edit(user) %}
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-outline-secondary" href="{% url 'photo-edit' album.pk photo.pk %}">Edit</a>
+                            <a class="btn btn-sm btn-outline-danger" href="{% url 'photo-delete' album.pk photo.pk %}">Delete</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12 alert alert-secondary">No photos have been uploaded to this album yet.</div>
+    {% endfor %}
+</div>
+{% endblock %}
