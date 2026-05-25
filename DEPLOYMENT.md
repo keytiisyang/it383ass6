@@ -25,7 +25,7 @@ git push -u origin main
 2. Sign up (free tier is fine)
 3. Go to Dashboard → Settings → API Environment Variable
 4. Copy the full `CLOUDINARY_URL` (includes api_key, api_secret, cloud_name)
-   - Format: `cloudinary://api_key:api_secret@cloud_name`
+	- Format: `cloudinary://api_key:api_secret@cloud_name`
 
 ## Step 3: Deploy to Render
 
@@ -36,12 +36,12 @@ git push -u origin main
 3. Connect your GitHub repository
 4. Select the branch (usually `main`)
 5. Render auto-detects `render.yaml` and configures:
-   - Web service with gunicorn
-   - PostgreSQL database
-   - Build & start commands
+	- Web service with gunicorn
+	- PostgreSQL database
+	- Build & start commands
 6. Set environment variables:
-   - `CLOUDINARY_URL`: Paste your Cloudinary URL from Step 2
-   - `ALLOWED_HOSTS`: Will be auto-set to your Render domain (e.g., `photo-album-xyz.onrender.com`)
+	- `CLOUDINARY_URL`: Paste your Cloudinary URL from Step 2
+	- `ALLOWED_HOSTS`: Will be auto-set to your Render domain (e.g., `photo-album-xyz.onrender.com`)
 7. Click **Deploy** and wait ~5-10 minutes
 
 ### Option B: Manual Setup
@@ -50,27 +50,27 @@ git push -u origin main
 2. Click **New +** → **Web Service**
 3. Connect GitHub repository
 4. Configure:
-   - **Name**: `photoalbum` (or your choice)
-   - **Environment**: `Python 3.11`
-   - **Build Command**: 
-     ```
-     pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
-     ```
-   - **Start Command**: 
-     ```
-     gunicorn photoalbum.wsgi
-     ```
+	- **Name**: `photoalbum` (or your choice)
+	- **Environment**: `Python 3.11`
+	- **Build Command**: 
+	  ```
+	  pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
+	  ```
+	- **Start Command**: 
+	  ```
+	  gunicorn photoalbum.wsgi
+	  ```
 5. Add environment variables:
-   - `SECRET_KEY`: (Render generates automatically)
-   - `DEBUG`: `False`
-   - `ALLOWED_HOSTS`: `your-app.onrender.com` (or use `*` for development)
-   - `CLOUDINARY_URL`: (from Step 2)
-   - `USE_CLOUDINARY`: `True`
-   - `DATABASE_URL`: (Render auto-links from PostgreSQL)
+	- `SECRET_KEY`: (Render generates automatically)
+	- `DEBUG`: `False`
+	- `ALLOWED_HOSTS`: `your-app.onrender.com` (or use `*` for development)
+	- `CLOUDINARY_URL`: (from Step 2)
+	- `USE_CLOUDINARY`: `True`
+	- `DATABASE_URL`: (Render auto-links from PostgreSQL)
 6. Create a PostgreSQL database:
-   - Click **New +** → **PostgreSQL**
-   - Name: `photoalbum-db`
-   - Render links `DATABASE_URL` automatically
+	- Click **New +** → **PostgreSQL**
+	- Name: `photoalbum-db`
+	- Render links `DATABASE_URL` automatically
 7. Click **Create Web Service** and wait for deployment
 
 ## Step 4: Verify Deployment
@@ -78,14 +78,14 @@ git push -u origin main
 1. Once deployed, go to your app URL (e.g., `https://photoalbum-xyz.onrender.com/`)
 2. You should see the Photo Albums page
 3. Create a superuser for the admin panel:
-   ```bash
-   # On your local machine (connected to production DB):
-   DATABASE_URL=<render-database-url> python manage.py createsuperuser
-   ```
-   OR via Render Shell:
-   - Open Render dashboard → your web service
-   - Click **Shell** tab
-   - Run: `python manage.py createsuperuser`
+	```bash
+	# On your local machine (connected to production DB):
+	DATABASE_URL=<render-database-url> python manage.py createsuperuser
+	```
+	OR via Render Shell:
+	- Open Render dashboard → your web service
+	- Click **Shell** tab
+	- Run: `python manage.py createsuperuser`
 4. Access admin at: `https://your-app.onrender.com/admin/`
 
 ## Step 5: Upload Images
@@ -145,3 +145,4 @@ git push -u origin main
 - Customize templates with your branding
 - Monitor Render logs for issues
 - Scale to paid plan if traffic increases
+
