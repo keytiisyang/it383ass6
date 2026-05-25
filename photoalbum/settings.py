@@ -7,7 +7,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env(
     DEBUG=(bool, False),
-    ALLOWED_HOSTS=(list, []),
+    ALLOWED_HOSTS=(list, ['https://photoalbum-ayuste.onrender.com',
+                          '127.0.0.1',
+                        'localhost',]),
     DATABASE_URL=(str, ''),
     CLOUDINARY_URL=(str, ''),
 )
