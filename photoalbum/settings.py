@@ -5,11 +5,22 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+def parse_allowed_hosts(value):
+    if isinstance(value, str):
+        value = [host.strip() for host in value.split(',') if host.strip()]
+    if not value:
+        return ['127.0.0.1', 'localhost']
+
+    cleaned = []
+    for host in value:
+        if host.startswith('http://') or host.startswith('https://'):
+            host = host.split('://', 1)[1]
+        cleaned.append(host.rstrip('/'))
+    return cleaned
+
 env = environ.Env(
     DEBUG=(bool, False),
-    ALLOWED_HOSTS=(list, ['https://photoalbum-ayuste.onrender.com',
-                          '127.0.0.1',
-                        'localhost',]),
+    ALLOWED_HOSTS=(str, '127.0.0.1,localhost'),
     DATABASE_URL=(str, ''),
     CLOUDINARY_URL=(str, ''),
 )
@@ -19,7 +30,7 @@ if ENV_PATH.exists():
 
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY', default='replace-this-in-production')
-ALLOWED_HOSTS = env('ALLOWED_HOSTS') or ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = parse_allowed_hosts(env('ALLOWED_HOSTS', default='127.0.0.1,localhost'))
 
 DATABASE_URL = env('DATABASE_URL', default=f'sqlite:///{BASE_DIR / "db.sqlite3"}')
 DATABASES = {'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)}
